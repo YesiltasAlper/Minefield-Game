@@ -4,11 +4,11 @@
 
 
 // Macros
-#define		TABLE_SIZE			6
+#define		TABLE_SIZE		6
 #define		NUMBER_OF_MINES		4
-#define		WIN					1
-#define		CONTINUE			0
-#define		GAME_OVER		   -1
+#define		WIN			1
+#define		CONTINUE		0
+#define		GAME_OVER	       -1
 
 
 // Global Variables
@@ -18,13 +18,13 @@ int sub_table[TABLE_SIZE + 2][TABLE_SIZE + 2];
 
 // Functions
 void initialize_sub_table();				// Alt tabloya ilk deger verilir
-void initialize_table();					// Tabloya ilk deger verilir
-void place_mines();							// Mayinlar yerlestirilir
-void display_sub_table();					// Alt tablo yazdirilir
-void display_table();						// Tablo yazdirilir
+void initialize_table();				// Tabloya ilk deger verilir
+void place_mines();					// Mayinlar yerlestirilir
+void display_sub_table();				// Alt tablo yazdirilir
+void display_table();					// Tablo yazdirilir
 void explorer(int row, int column);			// Mayin kesfeder
 int dig(int row, int column);				// Istenen yerin acilmasini saglar
-int is_winning();							// Kazanilip kazanilmadigini kontrol eder
+int is_winning();					// Kazanilip kazanilmadigini kontrol eder
 
 
 int main() {
@@ -209,15 +209,15 @@ void place_mines() {
 
 	for (int i = 1; i <= NUMBER_OF_MINES; i++) {
 
-		row = 1 + (rand() % TABLE_SIZE);							// Mayin yerlestirilecek satir no random olarak alinir
-		column = 1 + (rand() % TABLE_SIZE);							// Mayin yerlestirilecek sutun no random olarak alinir
+		row = 1 + (rand() % TABLE_SIZE);						// Mayin yerlestirilecek satir no random olarak alinir
+		column = 1 + (rand() % TABLE_SIZE);						// Mayin yerlestirilecek sutun no random olarak alinir
 
-		if (sub_table[row][column] == -1)							// Mayin olan bir yere tekrar mayin yerlestirildiyse
-			i--;													// random olarak satir ve sutunu tekrar al ve tekrar mayin yerlestir
+		if (sub_table[row][column] == -1)						// Mayin olan bir yere tekrar mayin yerlestirildiyse
+			i--;									// random olarak satir ve sutunu tekrar al ve tekrar mayin yerlestir
 
-		sub_table[row][column] = -1;								// Mayin yerlestirilir
+		sub_table[row][column] = -1;							// Mayin yerlestirilir
 
-		for (int j = -1; j <= 1; j++)								// Mayinlarin cevresi 2x2 matris seklinde dolasilir ve cevresindeki mayin sayilari yazdirilir
+		for (int j = -1; j <= 1; j++)							// Mayinlarin cevresi 2x2 matris seklinde dolasilir ve cevresindeki mayin sayilari yazdirilir
 			for (int k = -1; k <= 1; k++)
 				if (sub_table[row][column] == -1)
 					if (sub_table[row + j][column + k] != -1)		// Mayinlar haric bu islemi yap
@@ -313,7 +313,7 @@ int dig(int row, int column) {
 
 	int status = CONTINUE;
 
-	if (sub_table[row][column] == -1)				// Eger acilan yer mayin ise
+	if (sub_table[row][column] == -1)			// Eger acilan yer mayin ise
 		status = GAME_OVER;
 
 	else if (sub_table[row][column] > 0) {			// Eger acilan yer mayin degilse
@@ -322,7 +322,7 @@ int dig(int row, int column) {
 		status = CONTINUE;
 	}
 
-	else											// Diger durum
+	else											
 		explorer(row, column);
 
 	return status;
@@ -338,10 +338,10 @@ int is_winning() {
 		for (int j = 1; j <= TABLE_SIZE; j++)
 			if (table[i][j] == 'F')					// Eger konumda bayrak varsa ve
 				if (sub_table[i][j] == -1)			// bayrak mayinin uzerindeyse
-					flags_on_mines++;				// bayragin uzerindeki mayin sayisi arttirilir
+					flags_on_mines++;			// bayragin uzerindeki mayin sayisi arttirilir
 
-	if (flags_on_mines == NUMBER_OF_MINES)			// Mayinin uzerine koyulan bayrak sayisi oyundaki toplam
-		return WIN;									// bayrak sayisina esitse tum mayinlar bulunmustur
+	if (flags_on_mines == NUMBER_OF_MINES)			                // Mayinin uzerine koyulan bayrak sayisi oyundaki toplam
+		return WIN;							// bayrak sayisina esitse tum mayinlar bulunmustur
 
 	else
 		return CONTINUE;
